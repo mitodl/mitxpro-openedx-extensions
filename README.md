@@ -1,29 +1,45 @@
-BSD 3-Clause License
 
-Copyright (c) 2017, MIT Office of Digital Learning
-All rights reserved.
+MIT xPro Open edX Extensions
+---
 
-Redistribution and use in source and binary forms, with or without
-modification, are permitted provided that the following conditions are met:
 
-* Redistributions of source code must retain the above copyright notice, this
-  list of conditions and the following disclaimer.
+#### Prerequisites
 
-* Redistributions in binary form must reproduce the above copyright notice,
-  this list of conditions and the following disclaimer in the documentation
-  and/or other materials provided with the distribution.
+- [`pyenv`](https://github.com/pyenv/pyenv#installation) for managing python versions
+  - Install `python3.6` and `python2.7`
+- `pip install tox tox-pyenv` for running tests and discovering python versions from `pyenv`
+- [`poetry`](https://poetry.eustace.io/docs/#installation) for building, testing, and releasing
 
-* Neither the name of the copyright holder nor the names of its
-  contributors may be used to endorse or promote products derived from
-  this software without specific prior written permission.
+If this is your first time using `poetry`, you'll need to configure your pypi credentials via:
+- Configure pypi repository:
+  - `poetry config http-basic.pypi USERNAME PASSWORD`
+- Configure testpypi repository:
+  - `poetry config repositories.testpypi https://test.pypi.org/legacy`
+  - `poetry config http-basic.testpypi USERNAME PASSWORD`
 
-THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
-AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
-DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE
-FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL
-DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR
-SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
-CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
-OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
-OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+**NOTE:** when running `poetry` commands, particularly `pylint` and `black`, you must `python3.6`
+
+#### Testing
+
+You can just run `tox` locally to test, lint, and check formatting in the supported python versions. This works by having `tox` manage the virtualenvs, which `poetry` then detects and uses. Note that some of the tools (e.g. `pylint`, `black`) only support running in `python3.6` and this is reflected in `tox.ini`.
+
+Run individual commands can be run interactively in a `poetry shell` session or directly via `poetry run CMD`:
+
+- `pytest` - run python tests
+- `pylint` - lint python code
+- `black .` - format python code
+
+#### Building
+
+- `poetry build` - builds a pip-installable package into `dist/`
+
+
+#### Installing
+
+All that is required to install this in either a hosted version of Open edX or devstack is a `pip install` either from pypi or the output of `poetry build`.
+
+#### Releasing
+
+- `poetry version VERSION` - bump the project version (see `poetry version --help` for details)
+- `poetry publish -r testpypi` - publish to testpypi
+- `poetry publish` - publish to pypi

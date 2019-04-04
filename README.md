@@ -38,6 +38,12 @@ Run individual commands can be run interactively in a `poetry shell` session or 
 
 All that is required to install this in either a hosted version of Open edX or devstack is a `pip install` either from pypi or the output of `poetry build`.
 
+
+#### Configuring
+
+These extensions can be configured via settings in `lms.env.json`, they are all defined in [`mitxpro_core/settings/production.py`](mitxpro_core/settings/production.py)
+
+
 #### Releasing
 
 - `poetry version VERSION` - bump the project version (see `poetry version --help` for details)

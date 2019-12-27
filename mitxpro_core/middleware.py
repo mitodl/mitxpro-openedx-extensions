@@ -4,11 +4,15 @@ import re
 from django.conf import settings
 from django.shortcuts import redirect
 from django.utils.deprecation import MiddlewareMixin
+import urllib
 
 
-def redirect_to_login():
+def redirect_to_login(request):
     """Returns a response redirecting to the login url"""
-    return redirect(settings.MITXPRO_CORE_REDIRECT_LOGIN_URL)
+    return redirect("{}&next={}".format(
+        settings.MITXPRO_CORE_REDIRECT_LOGIN_URL,
+        urllib.quote(request.build_absolute_uri())
+    ))
 
 
 class RedirectAnonymousUsersToLoginMiddleware(MiddlewareMixin):
@@ -24,13 +28,13 @@ class RedirectAnonymousUsersToLoginMiddleware(MiddlewareMixin):
             if allowed_regexes and not any(
                 [re.match(pattern, request.path) for pattern in allowed_regexes]
             ):
-                return redirect_to_login()
+                return redirect_to_login(request)
 
             # if denied regexes are set, redirect if the path matches any
             denied_regexes = settings.MITXPRO_CORE_REDIRECT_DENY_RE_LIST
             if denied_regexes and any(
                 [re.match(pattern, request.path) for pattern in denied_regexes]
             ):
-                return redirect_to_login()
+                return redirect_to_login(request)
 
         return None

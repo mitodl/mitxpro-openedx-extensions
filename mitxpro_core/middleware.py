@@ -4,14 +4,14 @@ import re
 from django.conf import settings
 from django.shortcuts import redirect
 from django.utils.deprecation import MiddlewareMixin
-import urllib
+from django.utils.http import urlquote
 
 
 def redirect_to_login(request):
     """Returns a response redirecting to the login url"""
     return redirect("{}&next={}".format(
         settings.MITXPRO_CORE_REDIRECT_LOGIN_URL,
-        urllib.quote(request.build_absolute_uri())
+        urlquote(request.build_absolute_uri())
     ))
 
 

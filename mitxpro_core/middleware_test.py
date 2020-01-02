@@ -1,6 +1,8 @@
 """Middleware tests"""
 import pytest
 
+from django.utils.http import urlquote
+
 
 @pytest.mark.parametrize("is_enabled", [True, False])
 @pytest.mark.parametrize("is_anonymous", [True, False])
@@ -30,7 +32,7 @@ def test_redirect_middleware(
     should_redirect,
 ):  # pylint: disable=too-many-arguments
     """Test that the middleware redirects correctly"""
-    settings.MITXPRO_CORE_REDIRECT_LOGIN_URL = "/login"
+    settings.MITXPRO_CORE_REDIRECT_LOGIN_URL = "/mitxpro-oauth2/?auth_entry=login"
     settings.MITXPRO_CORE_REDIRECT_ENABLED = is_enabled
     settings.MITXPRO_CORE_REDIRECT_ALLOW_RE_LIST = allowed_regexes
     settings.MITXPRO_CORE_REDIRECT_DENY_RE_LIST = denied_regexes
@@ -50,6 +52,9 @@ def test_redirect_middleware(
     if should_redirect:
         mock_get_response.assert_not_called()
         assert response.status_code == 302
-        assert response.url == settings.MITXPRO_CORE_REDIRECT_LOGIN_URL
+        assert response.url == "{}&next={}".format(
+            settings.MITXPRO_CORE_REDIRECT_LOGIN_URL,
+            urlquote(request.build_absolute_uri()),
+        )
     else:
         mock_get_response.assert_called_once_with(request)

@@ -1,14 +1,26 @@
 """MIT xPro Open edX middlware"""
 import re
 
+try:
+    from urllib.parse import urlsplit, urlunsplit, parse_qsl
+except ImportError:
+    from urlparse import urlsplit, urlunsplit, parse_qsl
+
 from django.conf import settings
 from django.shortcuts import redirect
 from django.utils.deprecation import MiddlewareMixin
+from django.utils.http import urlquote
 
 
-def redirect_to_login():
+def redirect_to_login(request):
     """Returns a response redirecting to the login url"""
-    return redirect(settings.MITXPRO_CORE_REDIRECT_LOGIN_URL)
+    scheme, netloc, path, query, fragment = urlsplit(
+        settings.MITXPRO_CORE_REDIRECT_LOGIN_URL
+    )
+    query = parse_qsl(query)
+    query.append(("next", urlquote(request.build_absolute_uri())))
+    query = "&".join(["{}={}".format(key, value) for (key, value) in query])
+    return redirect(urlunsplit((scheme, netloc, path, query, fragment)))
 
 
 class RedirectAnonymousUsersToLoginMiddleware(MiddlewareMixin):
@@ -24,13 +36,13 @@ class RedirectAnonymousUsersToLoginMiddleware(MiddlewareMixin):
             if allowed_regexes and not any(
                 [re.match(pattern, request.path) for pattern in allowed_regexes]
             ):
-                return redirect_to_login()
+                return redirect_to_login(request)
 
             # if denied regexes are set, redirect if the path matches any
             denied_regexes = settings.MITXPRO_CORE_REDIRECT_DENY_RE_LIST
             if denied_regexes and any(
                 [re.match(pattern, request.path) for pattern in denied_regexes]
             ):
-                return redirect_to_login()
+                return redirect_to_login(request)
 
         return None

@@ -25,7 +25,7 @@ mitxpro_core = "mitxpro_core.apps:MITxProCoreConfig"
 
 [tool.poetry.dependencies]
 python = "~3.5 || ~3.8"
-django = "~1.11.20"
+django = "^2.1"
 futures = { version = "=3.2.0", python = "~2.7" }
 
 [tool.poetry.dev-dependencies]

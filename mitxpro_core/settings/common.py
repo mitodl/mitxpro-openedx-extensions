@@ -23,6 +23,6 @@ def plugin_settings(settings):
     ]
     settings.MITXPRO_CORE_REDIRECT_DENY_RE_LIST = []
 
-    settings.MIDDLEWARE_CLASSES.extend(
+    settings.MIDDLEWARE.extend(
         ["mitxpro_core.middleware.RedirectAnonymousUsersToLoginMiddleware"]
     )

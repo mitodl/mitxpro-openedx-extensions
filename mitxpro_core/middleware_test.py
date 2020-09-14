@@ -1,6 +1,5 @@
 """Middleware tests"""
 import pytest
-
 from django.utils.http import urlquote
 
 

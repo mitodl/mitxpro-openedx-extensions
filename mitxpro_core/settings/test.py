@@ -24,7 +24,7 @@ def plugin_settings(settings):  # pylint: disable=function-redefined
     ]
     settings.MITXPRO_CORE_REDIRECT_DENY_RE_LIST = []
 
-    settings.MIDDLEWARE_CLASSES = [
+    settings.MIDDLEWARE = [
         "mitxpro_core.middleware.RedirectAnonymousUsersToLoginMiddleware"
     ]
 

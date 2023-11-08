@@ -55,7 +55,7 @@ def test_redirect_middleware(
     if should_redirect:
         mock_get_response.assert_not_called()
         assert response.status_code == 302
-        assert response.url == "{}&next={}".format(
+        assert response.url == "{}&next={}".format(  # pylint: disable=consider-using-f-string
             settings.MITXPRO_CORE_REDIRECT_LOGIN_URL,
             urlquote(request.build_absolute_uri()),
         )

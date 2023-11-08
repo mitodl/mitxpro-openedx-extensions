@@ -14,7 +14,7 @@ except ImportError:
 try:
     from django.utils.http import urlquote
 except ImportError:
-    from urllib.parse import quote as urlquote
+    from urllib.parse import quote as urlquote  # pylint: disable=ungrouped-imports
 
 
 def redirect_to_login(request):
@@ -24,7 +24,7 @@ def redirect_to_login(request):
     )
     query = parse_qsl(query)
     query.append(("next", urlquote(request.build_absolute_uri())))
-    query = "&".join(["{}={}".format(key, value) for (key, value) in query])
+    query = "&".join(["{}={}".format(key, value) for (key, value) in query])  # pylint: disable=consider-using-f-string
     return redirect(urlunsplit((scheme, netloc, path, query, fragment)))
 
 
@@ -38,14 +38,14 @@ class RedirectAnonymousUsersToLoginMiddleware(MiddlewareMixin):
         ):
             # if allowed regexes are set, redirect if the path doesn't match any
             allowed_regexes = settings.MITXPRO_CORE_REDIRECT_ALLOW_RE_LIST
-            if allowed_regexes and not any(
+            if allowed_regexes and not any(  # pylint: disable=use-a-generator
                 [re.match(pattern, request.path) for pattern in allowed_regexes]
             ):
                 return redirect_to_login(request)
 
             # if denied regexes are set, redirect if the path matches any
             denied_regexes = settings.MITXPRO_CORE_REDIRECT_DENY_RE_LIST
-            if denied_regexes and any(
+            if denied_regexes and any(  # pylint: disable=use-a-generator
                 [re.match(pattern, request.path) for pattern in denied_regexes]
             ):
                 return redirect_to_login(request)

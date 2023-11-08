@@ -1,6 +1,7 @@
 """Middleware tests"""
 import pytest
 
+
 try:
     from django.utils.http import urlquote
 except ImportError:

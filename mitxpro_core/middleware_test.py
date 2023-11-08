@@ -1,6 +1,11 @@
 """Middleware tests"""
 import pytest
-from django.utils.http import urlquote
+
+
+try:
+    from django.utils.http import urlquote
+except ImportError:
+    from urllib.parse import quote as urlquote
 
 
 @pytest.mark.parametrize("is_enabled", [True, False])
@@ -51,9 +56,12 @@ def test_redirect_middleware(
     if should_redirect:
         mock_get_response.assert_not_called()
         assert response.status_code == 302
-        assert response.url == "{}&next={}".format(
-            settings.MITXPRO_CORE_REDIRECT_LOGIN_URL,
-            urlquote(request.build_absolute_uri()),
+        assert (
+            response.url
+            == "{}&next={}".format(  # pylint: disable=consider-using-f-string
+                settings.MITXPRO_CORE_REDIRECT_LOGIN_URL,
+                urlquote(request.build_absolute_uri()),
+            )
         )
     else:
         mock_get_response.assert_called_once_with(request)

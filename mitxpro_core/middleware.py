@@ -25,8 +25,11 @@ def redirect_to_login(request):
     query = parse_qsl(query)
     query.append(("next", urlquote(request.build_absolute_uri())))
     query = "&".join(
-        ["{}={}".format(key, value) for (key, value) in query]
-    )  # pylint: disable=consider-using-f-string
+        [
+            "{}={}".format(key, value)  # pylint: disable=consider-using-f-string
+            for (key, value) in query
+        ]
+    )
     return redirect(urlunsplit((scheme, netloc, path, query, fragment)))
 
 

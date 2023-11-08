@@ -4,13 +4,17 @@ import re
 from django.conf import settings
 from django.shortcuts import redirect
 from django.utils.deprecation import MiddlewareMixin
-from django.utils.http import urlquote
 
 
 try:
     from urllib.parse import urlsplit, urlunsplit, parse_qsl
 except ImportError:
     from urlparse import urlsplit, urlunsplit, parse_qsl
+
+try:
+    from django.utils.http import urlquote
+except ImportError:
+    from urllib.parse import quote as urlquote
 
 
 def redirect_to_login(request):

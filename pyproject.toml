@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "mitxpro-openedx-extensions"
-version = "1.0.0"
+version = "1.1.0"
 description = "MIT xPro plugins for Open edX"
 authors = [
   "MIT Office of Open Learning <mitx-devops@mit.edu>"

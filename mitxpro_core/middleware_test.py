@@ -1,6 +1,10 @@
 """Middleware tests"""
 import pytest
-from django.utils.http import urlquote
+
+try:
+    from django.utils.http import urlquote
+except ImportError:
+    from urllib.parse import quote as urlquote
 
 
 @pytest.mark.parametrize("is_enabled", [True, False])

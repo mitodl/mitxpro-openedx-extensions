@@ -24,7 +24,7 @@ packages = [
 mitxpro_core = "mitxpro_core.apps:MITxProCoreConfig"
 
 [tool.poetry.dependencies]
-python = "~3.8"
+python = "~3.12"
 django = ">=2.1, <5.0"
 futures = { version = "=3.4.0", python = "~2.7" }
 

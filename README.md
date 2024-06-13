@@ -1,6 +1,6 @@
 ## ⛔️ DEPRECATION WARNING
 
- **This repository is deprecated. Please see [openedx-companion-auth](https://github.com/mitodl/open-edx-plugins/tree/main/src/openedx_companion_auth) for all future updates and development.**
+ ### **This repository is deprecated. Please see [openedx-companion-auth](https://github.com/mitodl/open-edx-plugins/tree/main/src/openedx_companion_auth) for all future updates and development.**
 
 MIT xPro Open edX Extensions
 ---

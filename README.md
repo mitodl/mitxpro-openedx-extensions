@@ -1,10 +1,9 @@
+## ⛔️ DEPRECATION WARNING
+
+ **This repository is deprecated. Please see [openedx-companion-auth](https://github.com/mitodl/open-edx-plugins/tree/main/src/openedx_companion_auth) for all future updates and development.**
 
 MIT xPro Open edX Extensions
 ---
-#### ⛔️ DEPRECATION WARNING
-
-This repository is deprecated. Please see [openedx-companion-auth](https://github.com/mitodl/open-edx-plugins/tree/main/src/openedx_companion_auth) for all future updates and development. 
-
 #### Prerequisites
 
 - [`pyenv`](https://github.com/pyenv/pyenv#installation) for managing python versions

@@ -1,9 +1,9 @@
 
 MIT xPro Open edX Extensions
 ---
-#### Depreciation Notice
+#### ⛔️ DEPRECATION WARNING
 
-mitxpro-openedx-extensions has been deprecated in favor of [openedx-companion-auth](https://github.com/mitodl/open-edx-plugins/tree/main/src/openedx_companion_auth). Please transition to openedx-companion-auth to ensure continued support and functionality. 
+This repository is deprecated. Please see [openedx-companion-auth](https://github.com/mitodl/open-edx-plugins/tree/main/src/openedx_companion_auth) for all future updates and development. 
 
 #### Prerequisites
 
